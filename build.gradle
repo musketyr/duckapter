@@ -1,0 +1,67 @@
+buildscript {
+    // using a variable to make wiki look cleaner
+    def githubBase = 'https://github.com/valkolovos/gradle_cobertura/raw/master/ivy'
+    apply from: "${githubBase}/gradle_cobertura/gradle_cobertura/1.0-rc4/coberturainit.gradle"
+}
+
+apply plugin: 'java'
+apply plugin: 'code-quality'
+apply plugin: 'eclipse'
+apply plugin: 'maven'
+
+cbpwd = System.env.cbpwd 
+
+group = 'org.duckapter'
+version = '0.8.0'
+
+sourceCompatibility = targetCompatibility = '1.5'
+
+configurations {
+	deployerJars
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+	compile 'com.google.collections:google-collections:1.0'
+	testCompile 'junit:junit:4.8.2'
+	
+	deployerJars "org.apache.maven.wagon:wagon-webdav-jackrabbit:1.0-beta-6"
+}
+
+task packageJavadoc(type: Jar, dependsOn: 'javadoc') {
+	from javadoc.destinationDir
+	classifier = 'javadoc'
+}
+	
+task packageSources(type: Jar) {
+	from sourceSets.main.allSource
+	classifier = 'sources'
+}
+
+artifacts {
+	archives(packageJavadoc) {
+		type = 'javadoc'
+		extension = 'jar'
+	}
+
+	archives(packageSources)
+}
+
+uploadArchives {
+	repositories {
+		deployer = mavenDeployer {
+			uniqueVersion = false
+			configureAuth = {
+				authentication(userName: 'vladimir.orany', password: cbpwd)
+			}
+			configuration = configurations.deployerJars
+			snapshotRepository(url: "dav:https://repository-orany.forge.cloudbees.com/snapshot/", configureAuth)
+			repository(url: "dav:https://repository-orany.forge.cloudbees.com/release/", configureAuth)
+			pom.artifactId = 'duckapter'
+		}
+	}
+}
+
