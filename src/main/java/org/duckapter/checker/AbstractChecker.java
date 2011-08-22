@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.duckapter.Checker;
-import org.duckapter.annotation.CanCheck;
+import org.duckapter.annotation.ElementTypes;
 
 /**
  * The base class for implementation of the {@link Checker} interface. It
@@ -32,7 +32,7 @@ public abstract class AbstractChecker<T extends Annotation> implements
 	 * element to be adapted.
 	 */
 	protected static final List<ElementType> ALL_TARGETS = Arrays
-			.asList(CanCheck.DEFAULTS);
+			.asList(ElementTypes.DEFAULTS);
 	private final int hashCode;
 
 	/**

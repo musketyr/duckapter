@@ -14,8 +14,6 @@ cbpwd = System.env.cbpwd
 group = 'org.duckapter'
 version = '0.8.0'
 
-sourceCompatibility = targetCompatibility = '1.5'
-
 configurations {
 	deployerJars
 }

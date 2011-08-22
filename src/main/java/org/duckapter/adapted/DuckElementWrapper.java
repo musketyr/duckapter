@@ -14,7 +14,7 @@ import java.util.Map.Entry;
 
 import org.duckapter.Checker;
 import org.duckapter.InvocationAdapter;
-import org.duckapter.annotation.CanCheck;
+import org.duckapter.annotation.ElementTypes;
 import org.duckapter.checker.CheckerDescriptor;
 
 import com.google.common.collect.ImmutableMap;
@@ -44,7 +44,7 @@ final class DuckElementWrapper {
 		if (element instanceof Method) {
 			return new ElementType[]{ElementType.FIELD, ElementType.CONSTRUCTOR, ElementType.METHOD};
 		}
-		return CanCheck.DEFAULTS;
+		return ElementTypes.DEFAULTS;
 	}
 	
 	public AnnotatedElement getElement() {

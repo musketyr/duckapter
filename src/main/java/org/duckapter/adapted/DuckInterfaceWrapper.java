@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.duckapter.Checker;
-import org.duckapter.annotation.CanCheck;
+import org.duckapter.annotation.ElementTypes;
 import org.duckapter.checker.CheckerDescriptor;
 import org.duckapter.checker.Checkers;
 
@@ -82,7 +82,7 @@ final class DuckInterfaceWrapper<D>{
 	public static int getMinPriorityToFail(
 			Map<ElementType, Map<Checker, Annotation>> checkers) {
 		int ret = Integer.MAX_VALUE;
-		for (ElementType elType : CanCheck.DEFAULTS) {
+		for (ElementType elType : ElementTypes.DEFAULTS) {
 			for (Entry<Checker, Annotation> e : checkers.get(elType).entrySet()) {
 				final int min = CheckerDescriptor.getDescriptor(e.getValue()).getMinToFail();
 				if (min < ret) {
@@ -95,7 +95,7 @@ final class DuckInterfaceWrapper<D>{
 
 	public static int getMinPriorityToPass(Map<ElementType, Map<Checker, Annotation>> checkers) {
 		int ret = Integer.MIN_VALUE;
-		for (ElementType elementType : CanCheck.DEFAULTS) {
+		for (ElementType elementType : ElementTypes.DEFAULTS) {
 			for (Entry<Checker, Annotation> e : checkers.get(elementType).entrySet()) {
 				final int max = CheckerDescriptor.getDescriptor(e.getValue()).getMinToPass();
 				if (max > ret) {

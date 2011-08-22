@@ -11,12 +11,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.ANNOTATION_TYPE)
 public @interface CanCheck {
 
-	ElementType[] DEFAULTS = new ElementType[] { 
-			ElementType.TYPE,
-			ElementType.FIELD, 
-			ElementType.METHOD,
-			ElementType.CONSTRUCTOR 
-	};
-
 	ElementType[] value();
 }

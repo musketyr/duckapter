@@ -23,6 +23,7 @@ import org.duckapter.CheckerAnnotation;
 import org.duckapter.Duck;
 import org.duckapter.adapter.InvocationAdaptersPriorities;
 import org.duckapter.annotation.CanCheck;
+import org.duckapter.annotation.ElementTypes;
 import org.duckapter.annotation.MinToFail;
 import org.duckapter.annotation.MinToPass;
 import org.duckapter.annotation.SuppressChecker;
@@ -287,7 +288,7 @@ public final class CheckerDescriptor {
 
 	private Collection<ElementType> initTargetElements() {
 		if (!annotationType.isAnnotationPresent(CanCheck.class)) {
-			return Arrays.asList(CanCheck.DEFAULTS);
+			return Arrays.asList(ElementTypes.DEFAULTS);
 		}
 		Collection<ElementType> targets = Arrays.asList(annotationType
 				.getAnnotation(CanCheck.class).value());

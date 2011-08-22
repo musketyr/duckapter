@@ -13,7 +13,7 @@ import java.util.Set;
 import java.util.Map.Entry;
 
 import org.duckapter.Checker;
-import org.duckapter.annotation.CanCheck;
+import org.duckapter.annotation.ElementTypes;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Maps;
@@ -124,7 +124,7 @@ public final class Checkers {
 
 	public static EnumMap<ElementType, Map<Checker, Annotation>> initCheckers(){
 		EnumMap<ElementType, Map<Checker, Annotation>> checkers = Maps.newEnumMap(ElementType.class);
-		for (ElementType el : CanCheck.DEFAULTS) {
+		for (ElementType el : ElementTypes.DEFAULTS) {
 			checkers.put(el, new HashMap<Checker, Annotation>());
 		}
 		return checkers;
@@ -142,12 +142,12 @@ public final class Checkers {
 			}
 		}
 		for (Checker<?> ch : getDefaultCheckers()) {
-			for (ElementType elType : CanCheck.DEFAULTS) {
+			for (ElementType elType : ElementTypes.DEFAULTS) {
 				checkers.get(elType).put(ch, null);
 			}
 		}
 		Set<Entry<Checker, Annotation>> entries = new HashSet<Entry<Checker,Annotation>>();
-		for (ElementType elType : CanCheck.DEFAULTS) {
+		for (ElementType elType : ElementTypes.DEFAULTS) {
 			entries.addAll(checkers.get(elType).entrySet());
 		}
 		Set<CheckerDescriptor> suppressedMethodChecker = new HashSet<CheckerDescriptor>();
