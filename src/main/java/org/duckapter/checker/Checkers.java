@@ -4,19 +4,18 @@ import java.lang.annotation.Annotation;
 import java.lang.annotation.ElementType;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Member;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.duckapter.Checker;
 import org.duckapter.annotation.ElementTypes;
-
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Maps;
 
 /**
  * Utility class for checkers.
@@ -31,12 +30,19 @@ public final class Checkers {
 	}
 
 	@SuppressWarnings("unchecked")
-	private static final Collection<? extends Checker> defaultCheckers = ImmutableList.of(
-			new ExceptionsChecker<Annotation>(), new NameChecker<Annotation>(),
-			new MethodsOnlyChecker<Annotation>(), new PublicOnlyChecker<Annotation>(),
-			new ConcreteMethodsChecker<Annotation>(),
-			new ParametersChecker<Annotation>(),
-			new ReturnTypeChecker<Annotation>());
+	private static final Collection<? extends Checker> defaultCheckers;
+	
+	static {
+	    Collection<Checker> list = new ArrayList<Checker>();
+	    list.add(new NameChecker<Annotation>());
+	    list.add(new MethodsOnlyChecker<Annotation>());
+	    list.add(new PublicOnlyChecker<Annotation>());
+	    list.add(new ConcreteMethodsChecker<Annotation>());
+	    list.add(new ParametersChecker<Annotation>());
+	    list.add(new ReturnTypeChecker<Annotation>());
+	    list.add(new ExceptionsChecker<Annotation>());
+	    defaultCheckers = Collections.unmodifiableCollection(list);
+	}
 
 	/**
 	 * Return the collection of the default checkers which are always used until
@@ -122,8 +128,8 @@ public final class Checkers {
 	}
 
 
-	public static EnumMap<ElementType, Map<Checker, Annotation>> initCheckers(){
-		EnumMap<ElementType, Map<Checker, Annotation>> checkers = Maps.newEnumMap(ElementType.class);
+	public static Map<ElementType, Map<Checker, Annotation>> initCheckers(){
+		Map<ElementType, Map<Checker, Annotation>> checkers = new HashMap<ElementType, Map<Checker,Annotation>>();
 		for (ElementType el : ElementTypes.DEFAULTS) {
 			checkers.put(el, new HashMap<Checker, Annotation>());
 		}

@@ -2,13 +2,11 @@ package org.duckapter.adapted;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.TimeUnit;
 
 import org.duckapter.Adapted;
 import org.duckapter.AdaptedClass;
-
-import com.google.common.collect.MapMaker;
 
 /**
  * The class {@link AdaptedFactory} is factory class for instances of
@@ -115,8 +113,7 @@ public final class AdaptedFactory {
 		return ac;
 	}
 
-	private static ConcurrentMap<String, AdaptedClass<?,?>> cache = new MapMaker().expiration(
-			30, TimeUnit.MINUTES).makeMap();
+	private static ConcurrentMap<String, AdaptedClass<?,?>> cache = new ConcurrentHashMap<String, AdaptedClass<?,?>>();
 
 	@SuppressWarnings("unchecked")
 	private static <O, D> AdaptedClass<O, D> getFromCache(String s) {

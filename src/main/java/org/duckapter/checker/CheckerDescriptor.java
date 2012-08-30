@@ -14,6 +14,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,8 +28,6 @@ import org.duckapter.annotation.ElementTypes;
 import org.duckapter.annotation.MinToFail;
 import org.duckapter.annotation.MinToPass;
 import org.duckapter.annotation.SuppressChecker;
-
-import com.google.common.collect.ImmutableList;
 
 public final class CheckerDescriptor {
 
@@ -194,8 +193,8 @@ public final class CheckerDescriptor {
 		this.annotationType = annotation.annotationType();
 		
 		this.checker = initChecker();
-		this.canAdapt = ImmutableList.copyOf(initTargetElements());
-		this.suppressed = ImmutableList.copyOf(Arrays.asList(initSuppressCheckers()));
+		this.canAdapt = Collections.unmodifiableCollection(initTargetElements());
+		this.suppressed = Collections.unmodifiableCollection(Arrays.asList(initSuppressCheckers()));
 		this.minToFail = initMinAdapterPriorityToFail();
 		this.minToPass = initMinAdapterPriorityToPass();
 	}

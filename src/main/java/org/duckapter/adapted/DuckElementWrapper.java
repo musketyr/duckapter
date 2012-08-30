@@ -9,6 +9,8 @@ import java.lang.annotation.Annotation;
 import java.lang.annotation.ElementType;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Method;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -16,8 +18,6 @@ import org.duckapter.Checker;
 import org.duckapter.InvocationAdapter;
 import org.duckapter.annotation.ElementTypes;
 import org.duckapter.checker.CheckerDescriptor;
-
-import com.google.common.collect.ImmutableMap;
 
 final class DuckElementWrapper {
 
@@ -32,7 +32,7 @@ final class DuckElementWrapper {
 			int minToFail) {
 		this.testedElements = initTestedElements(method);
 		this.element = method;
-		this.checkers = ImmutableMap.copyOf(checkers);
+		this.checkers = Collections.unmodifiableMap(new HashMap<ElementType, Map<Checker, Annotation>>(checkers));
 		this.minToPass = minToPass;
 		this.minToFail = minToFail;
 	}

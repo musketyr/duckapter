@@ -3,6 +3,7 @@ package org.duckapter.adapted;
 import java.lang.annotation.Annotation;
 import java.lang.annotation.ElementType;
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -11,15 +12,13 @@ import org.duckapter.annotation.ElementTypes;
 import org.duckapter.checker.CheckerDescriptor;
 import org.duckapter.checker.Checkers;
 
-import com.google.common.collect.Maps;
-
 final class DuckInterfaceWrapper<D>{
 
-	private static final Map<Class<?>, DuckInterfaceWrapper<?>> cache = Maps.newHashMap();
+	private static final Map<Class<?>, DuckInterfaceWrapper<?>> cache = new HashMap<Class<?>, DuckInterfaceWrapper<?>>();
 	
 	private Class<D> duckInterface;
 	private DuckElementWrapper typeWrapper;
-	private Map<Method, DuckElementWrapper> methodsWrappers = Maps.newHashMap();
+	private Map<Method, DuckElementWrapper> methodsWrappers = new HashMap<Method, DuckElementWrapper>();
 	
 	public static <T> DuckInterfaceWrapper<T> wrap(Class<T> duckInterface){
 		DuckInterfaceWrapper<T> wrapper = (DuckInterfaceWrapper<T>) cache.get(duckInterface);

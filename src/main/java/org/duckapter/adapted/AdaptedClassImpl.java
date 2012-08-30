@@ -5,7 +5,10 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -13,10 +16,6 @@ import org.duckapter.AdaptationException;
 import org.duckapter.AdaptedClass;
 import org.duckapter.InvocationAdapter;
 import org.duckapter.adapter.MethodAdapter;
-
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 
 final class AdaptedClassImpl<O, D> extends AbstractAdaptedClass<O, D> implements
 		AdaptedClass<O, D>, InvocationHandler {
@@ -38,7 +37,7 @@ final class AdaptedClassImpl<O, D> extends AbstractAdaptedClass<O, D> implements
 		super(duckInterface, originalClass);
 		this.detailed = detailed;
 		this.interfaceWrapper = DuckInterfaceWrapper.wrap(duckInterface);
-		adapters = ImmutableMap.copyOf(collectInvocations());
+		adapters = Collections.unmodifiableMap(collectInvocations());
 	}
 
 	private AdaptedClass<O, D> getDetailedClass() {
@@ -55,7 +54,7 @@ final class AdaptedClassImpl<O, D> extends AbstractAdaptedClass<O, D> implements
 
 	public Collection<Method> getUnimplementedForClass() {
 		if (detailed) {
-			Collection<Method> methods = Lists.newArrayList();
+			Collection<Method> methods = new ArrayList<Method>();
 			for (Entry<Method, InvocationAdapter> entry : adapters.entrySet()) {
 				if (!entry.getValue().isInvocableOnClass()) {
 					methods.add(entry.getKey());
@@ -68,7 +67,7 @@ final class AdaptedClassImpl<O, D> extends AbstractAdaptedClass<O, D> implements
 
 	public Collection<Method> getUnimplementedForInstance() {
 		if (detailed) {
-			Collection<Method> methods = Lists.newArrayList();
+			Collection<Method> methods = new ArrayList<Method>();
 			for (Entry<Method, InvocationAdapter> entry : adapters.entrySet()) {
 				if (!entry.getValue().isInvocableOnInstance()) {
 					methods.add(entry.getKey());
@@ -85,7 +84,7 @@ final class AdaptedClassImpl<O, D> extends AbstractAdaptedClass<O, D> implements
 	}
 
 	private Map<Method, InvocationAdapter> collectInvocations() {
-		Map<Method, InvocationAdapter> builder = Maps.newHashMapWithExpectedSize(getDuckInterface().getMethods().length);
+		Map<Method, InvocationAdapter> builder = new HashMap<Method, InvocationAdapter>(getDuckInterface().getMethods().length);
 		checkClass(builder);
 		checkDuckMethods(builder);
 		addObjectMethods(builder);
