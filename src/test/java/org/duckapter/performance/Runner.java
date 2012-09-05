@@ -1,7 +1,6 @@
 package org.duckapter.performance;
 
 import java.lang.reflect.Method;
-import java.util.Random;
 import java.util.concurrent.Callable;
 
 import org.duckapter.Duck;

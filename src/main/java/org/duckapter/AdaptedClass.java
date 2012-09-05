@@ -2,7 +2,6 @@ package org.duckapter;
 
 import java.lang.reflect.Method;
 import java.util.Collection;
-import java.util.Map;
 
 /**
  * The {@link AdaptedClass} stores information about the class of original

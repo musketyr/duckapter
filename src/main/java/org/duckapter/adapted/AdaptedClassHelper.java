@@ -28,7 +28,6 @@ class AdaptedClassHelper {
 		return elements;
 	}
 	
-	@SuppressWarnings("unchecked")
 	static Collection<? extends AnnotatedElement> getRelevantElements(ElementType elType, Class<?> clazz) {
 		switch (elType) {
 		case CONSTRUCTOR:

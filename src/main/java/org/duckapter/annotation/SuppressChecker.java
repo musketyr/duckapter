@@ -12,7 +12,5 @@ import org.duckapter.Checker;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.ANNOTATION_TYPE)
 public @interface SuppressChecker {
-	
-	@SuppressWarnings("unchecked")
 	Class<? extends Checker>[] value();
 }
