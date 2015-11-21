@@ -41,7 +41,7 @@ final class AdaptedClassImpl<O, D> extends AbstractAdaptedClass<O, D> implements
 	}
 
 	private AdaptedClass<O, D> getDetailedClass() {
-		if (detailed == true) {
+		if (detailed) {
 			return this;
 		}
 		if (detailedClass == null) {
@@ -168,33 +168,27 @@ final class AdaptedClassImpl<O, D> extends AbstractAdaptedClass<O, D> implements
 		try {
 			return (D) proxyClassConstructor.newInstance(handler);
 		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+            throw new IllegalStateException("Cannot create proxy!", e);
 		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+            throw new IllegalStateException("Cannot create proxy!", e);
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+            throw new IllegalStateException("Cannot create proxy!", e);
 		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+            throw new IllegalStateException("Cannot create proxy!", e);
 		}
-		throw new IllegalStateException("Cannot create proxy!");
+
 	}
 
 	private void initProxyConstructor() {
 		Class<?> proxyClass = Proxy.getProxyClass(AdaptedClassImpl.class
 				.getClassLoader(), getDuckInterface());
 		try {
-			proxyClassConstructor = proxyClass
-					.getConstructor(InvocationHandler.class);
+			proxyClassConstructor = proxyClass.getConstructor(InvocationHandler.class);
+            proxyClassConstructor.setAccessible(true);
 		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+            throw new IllegalStateException("Cannot init proxy constructor!", e);
 		} catch (NoSuchMethodException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+            throw new IllegalStateException("Cannot init proxy constructor!", e);
 		}
 	}
 
