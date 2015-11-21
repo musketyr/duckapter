@@ -1,17 +1,4 @@
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath 'org.gradle.api.plugins:gradle-nexus-plugin:0.1'
-    }
-}
-
-
 apply plugin: 'java'
-apply plugin: 'eclipse'
-apply plugin: 'nexus'
 
 group = 'org.duckapter'
 version = '0.8.0'
@@ -25,7 +12,7 @@ dependencies {
 	testCompile 'junit:junit:4.8.2'
 }
 
-modifyPom {
+/* modifyPom {
     project {
         name 'Duckapter'
         description 'Duck typing support for Java'
@@ -54,7 +41,4 @@ modifyPom {
             }
         }
     }
-}
-
-
-
+}*/
