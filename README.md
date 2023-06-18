@@ -7,4 +7,4 @@ or instance.
 Introduction can be find on https://code.google.com/p/duckapter/
 
 # Instalaltion
-Duckapeter is available on the Maven Central as `org.duckapter:duckapter:0.8.0`.
+Duckapter is available on the Maven Central as `org.duckapter:duckapter:0.8.0`.
